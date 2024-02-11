@@ -1,0 +1,10 @@
+
+dash==2.14.2
+gspread==6.0.1
+pandas==1.5.3
+numpy
+scikit-learn==1.2.2
+xgboost==2.0.1
+oauth2client
+gunicorn==19.7.1
+dash_bootstrap_components
