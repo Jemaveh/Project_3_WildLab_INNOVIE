@@ -41,7 +41,7 @@ modelDiab = RandomForestClassifier(criterion = 'entropy', max_features = None, m
 scal_diab = QuantileTransformer()
 modelSein = KNeighborsClassifier(n_neighbors = 5, weights = 'uniform')
 scal_sein = QuantileTransformer()
-modelCoeur = XGBClassifier(colsample_bytrr = 0.5, gamma = 0, learning_rate = 0.01, max_depth = 6, min_child_weight = 0)
+modelCoeur = XGBClassifier(colsample_bytree = 0.5, gamma = 0, learning_rate = 0.01, max_depth = 6, min_child_weight = 0)
 scal_coeur = MaxAbsScaler()
 
 # Info pour exporter en spreadsheet
@@ -154,7 +154,17 @@ diabete_layout = html.Div([
         ],
     ),
 ])),
+dbc.Row(html.P(style={'margin-top': '20px'})),
+    dbc.Row(html.H3('Exemples')),
     dbc.Row(html.P(style={'margin-top': '20px'})),
+    dbc.Row([
+    dbc.Col(html.Button("Patient 1", id="enter-values-btn1", n_clicks=0, className="btn btn-primary btn-lg")),
+    dbc.Col(
+        dbc.Button("Reset", id="reset-btn", n_clicks=0, className="btn btn-danger btn-lg")
+    ),
+    dbc.Col(html.Button("Patient 2", id="enter-values-btn2", n_clicks=0, className="btn btn-primary btn-lg"))
+]),
+    dbc.Row(html.P(style={'margin-top': '40px'})),
     dbc.Row(html.H3('Patient')),
     dbc.Row(html.P(style={'margin-top': '20px'})),
     dbc.Row(dbc.Col([dbc.InputGroup([
@@ -221,6 +231,35 @@ def toggle_offcanvas_diabete(n1, is_open):
         return not is_open
     return is_open
 
+#callback pour pré-enter les valeurs
+@app.callback(
+    Output('Input_IDdiab', 'value'),
+    Output('Input_agediab', 'value'),
+    Output('Input_grossesse', 'value'),
+    Output('Input_imc', 'value'),
+    Output('Input_insuline', 'value'),
+    Output('Input_glucose', 'value'),
+    Output('Input_triceps', 'value'),
+    Output('Input_pressart', 'value'),
+    Output('Input_proba', 'value'),
+    Input('enter-values-btn1', 'n_clicks'),
+    Input('enter-values-btn2', 'n_clicks'),
+    Input('reset-btn', 'n_clicks')
+)
+
+def enter_precise_values(btn1_clicks, btn2_clicks, reset_clicks):
+    ctx = dash.callback_context
+    if not ctx.triggered:
+        raise dash.exceptions.PreventUpdate
+    else:
+        button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        if button_id == 'enter-values-btn1':
+            return "ID-Patient-1", 26, 4, 31.1, 93, 93, 25, 68, 0.183
+        elif button_id == 'enter-values-btn2':
+            return "ID-Patient-2", 25, 0, 41.1, 162, 131.9, 34, 39, 1.988
+        elif button_id == 'reset-btn':
+            return None, None, None, None, None, None, None, None, None
+
 @app.callback(
     [Output('diab_diag', 'children'), Output('proba_diag_diab', 'children'), Output('diab_export', 'children')],
     [Input('pred_diab_button', 'n_clicks')],
@@ -263,13 +302,13 @@ def diab_predict(n_clicks, input_IDdiab, input_agediab, input_grossesse, input_i
             diab_diag = "Votre patient n'est pas malade"
             proba = modelDiab.predict_proba(diab_data_scal)
             diab_proba = proba[0,0]
-            proba_diag_diab = f"Selon notre modèle, la fiabilité du résultat est évalué à  : {diab_proba*100} %"
+            proba_diag_diab = f"Selon notre modèle, la fiabilité du résultat est évalué à  : {round(diab_proba * 100, 2)} %"
             return diab_diag, proba_diag_diab, diab_export
         else :
             diab_diag = 'Il est possible que votre patient soit malade, veuillez approfondir les analyses'
             proba = modelDiab.predict_proba(diab_data_scal)
             diab_proba = proba[0,1]
-            proba_diag_diab = f"Selon notre modèle, la fiabilité du résultat est évalué à  : {diab_proba*100} %"
+            proba_diag_diab = f"Selon notre modèle, la fiabilité du résultat est évalué à  : {round(diab_proba * 100, 2)} %"
             return diab_diag, proba_diag_diab, diab_export
            
 
@@ -293,7 +332,17 @@ mcr_layout = html.Div([
         ],
     ),
 ])),
+dbc.Row(html.P(style={'margin-top': '20px'})),
+    dbc.Row(html.H3('Exemples')),
     dbc.Row(html.P(style={'margin-top': '20px'})),
+    dbc.Row([
+    dbc.Col(html.Button("Patient 1", id="enter-values-btn1", n_clicks=0, className="btn btn-primary btn-lg")),
+    dbc.Col(
+        dbc.Button("Reset", id="reset-btn", n_clicks=0, className="btn btn-danger btn-lg")
+    ),
+    dbc.Col(html.Button("Patient 2", id="enter-values-btn2", n_clicks=0, className="btn btn-primary btn-lg"))
+]),
+    dbc.Row(html.P(style={'margin-top': '40px'})),
     dbc.Row(html.H3('Patient')),
     dbc.Row(html.P(style={'margin-top': '20px'})),
     dbc.Row([
@@ -402,6 +451,37 @@ def toggle_offcanvas_rein(n1, is_open):
         return not is_open
     return is_open
 
+#callback pour pré-enter les valeurs
+@app.callback(
+    Output('Input_IDrein', 'value'),
+    Output('Input_age', 'value'),
+    Output('Input_pcv', 'value'),
+    Output('Input_pressure', 'value'),
+    Output('slider_sucre', 'value'),
+    Output('Input_coronary', 'value'),
+    Output('Input_hpt', 'value'),
+    Output('Input_dbt', 'value'),
+    Output('Input_pus', 'value'),
+    Output('Input_anemie', 'value'),
+    Output('Input_appet', 'value'),
+    Input('enter-values-btn1', 'n_clicks'),
+    Input('enter-values-btn2', 'n_clicks'),
+    Input('reset-btn', 'n_clicks')
+)
+
+def enter_precise_values(btn1_clicks, btn2_clicks, reset_clicks):
+    ctx = dash.callback_context
+    if not ctx.triggered:
+        raise dash.exceptions.PreventUpdate
+    else:
+        button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        if button_id == 'enter-values-btn1':
+            return "ID-Patient-1", 68, 31, 89, 0, 0, 1, 0, 0, 0, 1
+        elif button_id == 'enter-values-btn2':
+            return "ID-Patient-2", 42, 23, 58, 0, 0, 0, 0, 1, 0, 1
+        elif button_id == 'reset-btn':
+            return None, None, None, None, None, None, None, None, None, None, None
+
 @app.callback(
     [Output('rein_diag', 'children'),Output('proba_diag_rein', 'children'), Output('rein_export', 'children')],
     [Input('pred_rein_button', 'n_clicks')],
@@ -446,13 +526,13 @@ def rein_predict(n_clicks, input_IDrein, input_age, input_pcv, input_pressure, s
             rein_diag = "Votre patient n'est pas malade"
             proba = modelRein.predict_proba(rein_data_scal)
             rein_proba = proba[0,0]
-            proba_diag_rein = f"Selon notre modèle, la fiabilité du résultat est évalué à  : {rein_proba*100} %"
+            proba_diag_rein = f"Selon notre modèle, la fiabilité du résultat est évalué à  : {round(rein_proba * 100, 2)} %"
             return rein_diag, proba_diag_rein, rein_export
         else :
             rein_diag = 'Il est possible que votre patient soit malade, veuillez approfondir les analyses'
             proba = modelRein.predict_proba(rein_data_scal)
             rein_proba = proba[0,1]
-            proba_diag_rein = f"Selon notre modèle, la fiabilité du résultat est évalué à  : {rein_proba*100} %"
+            proba_diag_rein = f"Selon notre modèle, la fiabilité du résultat est évalué à  : {round(rein_proba * 100, 2)} %"
             return rein_diag,proba_diag_rein, rein_export
 
 
@@ -483,7 +563,17 @@ foie_layout = html.Div([
         ],
     ),
 ])),
+dbc.Row(html.P(style={'margin-top': '20px'})),
+    dbc.Row(html.H3('Exemples')),
     dbc.Row(html.P(style={'margin-top': '20px'})),
+    dbc.Row([
+    dbc.Col(html.Button("Patient 1", id="enter-values-btn1", n_clicks=0, className="btn btn-primary btn-lg")),
+    dbc.Col(
+        dbc.Button("Reset", id="reset-btn", n_clicks=0, className="btn btn-danger btn-lg")
+    ),
+    dbc.Col(html.Button("Patient 2", id="enter-values-btn2", n_clicks=0, className="btn btn-primary btn-lg"))
+]),
+    dbc.Row(html.P(style={'margin-top': '40px'})),
     dbc.Row(html.H3('Patient')),
     dbc.Row(html.P(style={'margin-top': '20px'})),
     dbc.Row([
@@ -541,6 +631,32 @@ def toggle_offcanvas_foie(n1, is_open):
         return not is_open
     return is_open
 
+#callback pour pré-entrer les exemples patient1 et patient2
+@app.callback(
+    Output('Input_IDfoie', 'value'),
+    Output('Input_agefoie', 'value'),
+    Output('Input_alamine', 'value'),
+    Output('Input_alka', 'value'),
+    Output('Input_albglo', 'value'),
+    Output('Input_bili', 'value'),
+    Input('enter-values-btn1', 'n_clicks'),
+    Input('enter-values-btn2', 'n_clicks'),
+    Input('reset-btn', 'n_clicks')
+)
+
+def enter_precise_values(btn1_clicks, btn2_clicks, reset_clicks):
+    ctx = dash.callback_context
+    if not ctx.triggered:
+        raise dash.exceptions.PreventUpdate
+    else:
+        button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        if button_id == 'enter-values-btn1':
+            return "ID-Patient-1", 60, 19.9, 492, 0.36, 0.49
+        elif button_id == 'enter-values-btn2':
+            return "ID-Patient-2", 65, 15.95, 186, 0.9, 0.7
+        elif button_id == 'reset-btn':
+            return None, None, None, None, None, None
+
 @app.callback(
     [Output('foie_diag', 'children'),Output('proba_diag_foie', 'children'), Output('foie_export', 'children')],
     [Input('pred_foie_button', 'n_clicks')],
@@ -577,15 +693,14 @@ def foie_predict(n_clicks,input_IDfoie, input_agefoie, input_alamine, input_alka
             foie_diag = "Votre patient n'est pas malade"
             proba = modelFoie.predict_proba(foie_data_scal)
             foie_proba = proba[0,0]
-            proba_diag_foie = f"Selon notre modèle, la fiabilité du résultat est évalué à  : {foie_proba*100} %"
+            proba_diag_foie = f"Selon notre modèle, la fiabilité du résultat est évalué à  : {round(foie_proba * 100, 2)} %"
             return foie_diag, proba_diag_foie, foie_export
         else :
             foie_diag = 'Il est possible que votre patient soit malade, veuillez approfondir les analyses'
             proba = modelFoie.predict_proba(foie_data_scal)
             foie_proba = proba[0,1]
-            proba_diag_foie = f"Selon notre modèle, la fiabilité du résultat est évalué à  : {foie_proba*100} %"
+            proba_diag_foie = f"Selon notre modèle, la fiabilité du résultat est évalué à  :  {round(foie_proba * 100, 2)} %"
             return foie_diag, proba_diag_foie, foie_export
-
 
 # Layout de la page du coeur
 coeur_layout = html.Div([
@@ -640,8 +755,17 @@ coeur_layout = html.Div([
         ],
     ),
 ])),
-
+dbc.Row(html.P(style={'margin-top': '20px'})),
+    dbc.Row(html.H3('Exemples')),
     dbc.Row(html.P(style={'margin-top': '20px'})),
+    dbc.Row([
+    dbc.Col(html.Button("Patient 1", id="enter-values-btn1", n_clicks=0, className="btn btn-primary btn-lg")),
+    dbc.Col(
+        dbc.Button("Reset", id="reset-btn", n_clicks=0, className="btn btn-danger btn-lg")
+    ),
+    dbc.Col(html.Button("Patient 2", id="enter-values-btn2", n_clicks=0, className="btn btn-primary btn-lg"))
+]),
+    dbc.Row(html.P(style={'margin-top': '40px'})),
     dbc.Row(html.H3('Patient')),
     dbc.Row(html.P(style={'margin-top': '20px'})),
     dbc.Row([
@@ -750,6 +874,40 @@ def toggle_offcanvas_coeur(n1, is_open):
         return not is_open
     return is_open
 
+#callback pour pré-entrer les exemples patient1 et patient2
+@app.callback(
+    Output('Input_IDcoeur', 'value'),
+    Output('Input_genre', 'value'),
+    Output('Input_agecoeur', 'value'),
+    Output('Input_pad', 'value'),
+    Output('Input_chol', 'value'),
+    Output('Input_glycemie', 'value'),
+    Output('Input_freqmax', 'value'),
+    Output('Input_thalass', 'value'),
+    Output('Input_depression', 'value'),
+    Output('Input_pente', 'value'),
+    Output('Input_vaisseaux', 'value'),
+    Output('Input_exang', 'value'),
+    Output('Input_electro', 'value'),
+    Output('Input_thoracique', 'value'),
+    Input('enter-values-btn1', 'n_clicks'),
+    Input('enter-values-btn2', 'n_clicks'),
+    Input('reset-btn', 'n_clicks')
+)
+
+def enter_precise_values(btn1_clicks, btn2_clicks, reset_clicks):
+    ctx = dash.callback_context
+    if not ctx.triggered:
+        raise dash.exceptions.PreventUpdate
+    else:
+        button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        if button_id == 'enter-values-btn1':
+            return "ID-Patient-1", 1, 67, 144, 272, 0, 158, 2, 0, 1, 1, 0, 0, 2
+        elif button_id == 'enter-values-btn2':
+            return "ID-Patient-2", 1, 67, 160, 244, 0, 118, 1, 0, 1, 3, 1, 1, 1
+        elif button_id == 'reset-btn':
+            return None, None, None, None, None, None, None, None, None, None, None, None, None, None
+
 @app.callback(
     [Output('coeur_diag', 'children'), Output('proba_diag_coeur', 'children'), Output('coeur_export', 'children')],
     [Input('pred_coeur_button', 'n_clicks')],
@@ -796,13 +954,13 @@ def coeur_predict(n_clicks, input_IDcoeur, input_genre, input_agecoeur, input_pa
             coeur_diag = "Votre patient n'est pas malade"
             proba = modelCoeur.predict_proba(coeur_data_scal)
             coeur_proba = proba[0,0]
-            proba_diag_coeur = f"Selon notre modèle, la fiabilité du résultat est évalué à  : {coeur_proba*100} %"
+            proba_diag_coeur = f"Selon notre modèle, la fiabilité du résultat est évalué à  : {round(coeur_proba * 100, 2)} %"
             return coeur_diag, proba_diag_coeur, coeur_export
         else :
             coeur_diag = 'Il est possible que votre patient soit malade, veuillez approfondir les analyses'
             proba = modelCoeur.predict_proba(coeur_data_scal)
             coeur_proba = proba[0,1]
-            proba_diag_coeur = f"Selon notre modèle, la fiabilité du résultat est évalué à  : {coeur_proba*100} %"
+            proba_diag_coeur = f"Selon notre modèle, la fiabilité du résultat est évalué à  : {round(coeur_proba * 100, 2)} %"
             return coeur_diag, proba_diag_coeur, coeur_export
 
 
@@ -840,6 +998,16 @@ sein_layout = html.Div([
     ),
 ])),
     dbc.Row(html.P(style={'margin-top': '20px'})),
+    dbc.Row(html.H3('Exemples')),
+    dbc.Row(html.P(style={'margin-top': '20px'})),
+    dbc.Row([
+    dbc.Col(html.Button("Patient 1", id="enter-values-btn1", n_clicks=0, className="btn btn-primary btn-lg")),
+    dbc.Col(
+        dbc.Button("Reset", id="reset-btn", n_clicks=0, className="btn btn-danger btn-lg")
+    ),
+    dbc.Col(html.Button("Patient 2", id="enter-values-btn2", n_clicks=0, className="btn btn-primary btn-lg"))
+]),
+    dbc.Row(html.P(style={'margin-top': '40px'})),
     dbc.Row(html.H3('Patient')),
     dbc.Row(html.P(style={'margin-top': '20px'})),
     dbc.Row([
@@ -907,6 +1075,34 @@ def toggle_offcanvas_sein(n1, is_open):
         return not is_open
     return is_open
 
+#callback pour pré-entrer les exemples patient1 et patient2
+@app.callback(
+    Output('Input_IDsein', 'value'),
+    Output('Input_texture_mean', 'value'),
+    Output('Input_area_mean', 'value'),
+    Output('Input_smoothness_mean', 'value'),
+    Output('Input_compactness_mean', 'value'),
+    Output('Input_concavity_mean', 'value'),
+    Output('Input_concave_points_mean', 'value'),
+    Output('Input_symmetry_mean', 'value'),
+    Input('enter-values-btn1', 'n_clicks'),
+    Input('enter-values-btn2', 'n_clicks'),
+    Input('reset-btn', 'n_clicks')
+)
+
+def enter_precise_values(btn1_clicks, btn2_clicks, reset_clicks):
+    ctx = dash.callback_context
+    if not ctx.triggered:
+        raise dash.exceptions.PreventUpdate
+    else:
+        button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        if button_id == 'enter-values-btn1':
+            return "ID-Patient-1", 0.473, 0.609, 0.314, 0.45, 0.395, 0.487, 0.606
+        elif button_id == 'enter-values-btn2':
+            return "ID-Patient-2", 0.045, 0.005, 0.685, 0.291, 0.162, 0.119, 0.318
+        elif button_id == 'reset-btn':
+            return None, None, None, None, None, None, None, None
+        
 @app.callback(
     [Output('sein_diag', 'children'), Output('proba_diag_sein', 'children'), Output('sein_export', 'children')],
     [Input('pred_sein_button', 'n_clicks')],
@@ -954,7 +1150,7 @@ def sein_predict(n_clicks, input_IDsein, input_texture_mean, input_area_mean,inp
             proba_diag_sein = f"Selon notre modèle, la fiabilité du résultat est évalué à  : {sein_proba*100} %"
             return sein_diag, proba_diag_sein, sein_export
         else:
-            sein_diag = "C'est probablement une tumeur maligne"
+            sein_diag = "Il est possible que ce soit une tumeur maligne, veuillez approfondir les analyses"
             proba = modelSein.predict_proba(sein_data_scal)
             sein_proba = proba[0,1]
             proba_diag_sein = f"Selon notre modèle, la fiabilité du résultat est évalué à  : {sein_proba*100} %"
@@ -999,6 +1195,3 @@ def display_page(pathname):
 
 if __name__ == '__main__':
     app.run_server(host='0.0.0.0', port=8080, debug=True)
-
-
-
