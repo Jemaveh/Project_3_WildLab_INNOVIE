@@ -128,28 +128,28 @@ diabete_layout = html.Div([
         dbc.Button("Lexique des variables", id="open-offcanvas-diabete", n_clicks=0),
         dbc.Offcanvas(id="offcanvas-diabete", scrollable=True, title="Lexique des variables", is_open=False,
                     children=[ html.Div([
-                html.H6("Glucose:", className="mt-3", style={"font-weight": "bold"}),
-                html.P("Concentration de glucose plasmatique à 2 heures lors d'un test de tolérance au glucose oral."),
+                 html.H6("IMC (kg/m²):", className="mt-3", style={"font-weight": "bold"}),
+            html.P("Indice de masse corporelle (poids en kg/(taille en m²)."),
+            html.P("IMC supérieur ou égal à 25 kg/m² = surpoids"),
 
-                html.H6("Pression artérielle:", className="mt-3", style={"font-weight": "bold"}),
-                html.P("Pression diastolique (mm Hg). : la pression minimum enregistrée lors du relâchement du cœur."),
-                html.P("Hypertension artérielle si >= 80 mmHg (mm de mercure)."),
+            html.H6("Insulin sérique (mu U/ml):", className="mt-3", style={"font-weight": "bold"}),
+            html.P("Insuline sérique à 2 heures."),
+            html.P("Les valeurs usuelles sont comprises entre 2 et 20 µUI/mL à jeun (14 à 140 pmol/L)."),
+            html.P("Taux de glycémie normal 2h après le repas doit se situer entre 1,30 et 1,60 g/L."),
+            html.P("La glycémie normale 2 h après le début d'un repas doit être inférieure à 1,40 g/L."),
 
-                html.H6("Épaisseur du pli cutané du triceps:", className="mt-3", style={"font-weight": "bold"}),
-                html.P("Epaisseur mesurée d’un pli de peau au niveau du triceps en mm."),
+            html.H6("Glucose (mg/dl):", className="mt-3", style={"font-weight": "bold"}),
+            html.P("Concentration de glucose plasmatique à 2 heures lors d'un test de tolérance au glucose oral."),
 
-                html.H6("Insulin:", className="mt-3", style={"font-weight": "bold"}),
-                html.P("Insuline sérique à 2 heures (mu U/ml)."),
-                html.P("Les valeurs usuelles sont comprises entre 2 et 20 µUI/mL à jeun (14 à 140 pmol/L)."),
-                html.P("Taux de glycémie normal 2h après le repas doit se situer entre 1,30 et 1,60."),
-                html.P("La glycémie normale 2 h après le début d'un repas doit être inférieure à 1,40 g/L."),
-                
-                html.H6("IMC:", className="mt-3", style={"font-weight": "bold"}),
-                html.P("Indice de masse corporelle (poids en kg/(taille en m)^2)."),
-                html.P("IMC supérieur ou égal à 25 kg/m^2 = surpoids"),
+            html.H6("Épaisseur du pli cutané du triceps (mm):", className="mt-3", style={"font-weight": "bold"}),
+            html.P("Epaisseur mesurée d’un pli de peau au niveau du triceps en millimètres."),
 
-                html.H6("Diabetes Pedigree Function:", className="mt-3", style={"font-weight": "bold"}),
-                html.P("Une fonction qui évalue la probabilité de diabète en fonction des antécédents familiaux.")
+            html.H6("Pression artérielle (mm Hg) :", className="mt-3", style={"font-weight": "bold"}),
+            html.P("Mesure de la pression diastolique : la pression minimum enregistrée lors du relâchement du cœur."),
+            html.P("Hypertension artérielle si >= 80 mm Hg (millimètres de mercure)."),
+
+            html.H6("Diabetes Pedigree Function:", className="mt-3", style={"font-weight": "bold"}),
+            html.P("Une fonction qui évalue la probabilité de diabète en fonction des antécédents familiaux.")
             ])
         ],
     ),
@@ -322,12 +322,44 @@ mcr_layout = html.Div([
         dbc.Button("Lexique des variables", id="open-offcanvas-rein", n_clicks=0),
         dbc.Offcanvas(id="offcanvas-rein", scrollable=True, title="Lexique des variables", is_open=False,
                     children=[ html.Div([
-                html.H6("Volume globule rouge:", className="mt-3", style={"font-weight": "bold"}),
-                html.P("Lorsque vos globules rouges sont en nombre et en consistance normale," 
-                       "votre taux de VGM se situe entre 80 et 100 femtolitres"),
+                html.H6("Volume globule rouge (%):", className="mt-3", style={"font-weight": "bold"}),
+                html.P("Le pourcentage de volume occupé par les globules rouges dans le sang du patient (hématocrite)."),
 
                 html.H6("Pression artérielle (mmHg):", className="mt-3", style={"font-weight": "bold"}),
-                html.P("une tension de 130/80 ou plus est considérée comme élevée"),
+                html.P("Mesure de la tension, 130/80 ou plus est considérée comme élevée"),
+                
+                html.H6("Niveau de Sucre(0 à 5):", className="mt-3", style={"font-weight": "bold"}),
+                html.P("La concentration de sucre dans l'urine du patient."),
+                
+                html.H6("Maladie coronarienne:", className="mt-3", style={"font-weight": "bold"}),
+                html.P("Présence de maladie coronarienne :"),
+                html.P("- Oui : 1"),
+                html.P("- Non : 0"),
+                
+                html.H6("Hypertension:", className="mt-3", style={"font-weight": "bold"}),
+                html.P("Présence d'hypertension :"),
+                html.P("- Oui : 1"),
+                html.P("- Non : 0"),
+                
+                html.H6("Diabète:", className="mt-3", style={"font-weight": "bold"}),
+                html.P("Présence de diabète :"),
+                html.P("- Oui : 1"),
+                html.P("- Non : 0"),
+                
+                html.H6("Cellules de pus:", className="mt-3", style={"font-weight": "bold"}),
+                html.P("Présence de cellules de pu dans l'urine :"),
+                html.P("- Oui : 1"),
+                html.P("- Non : 0"),
+                
+                html.H6("Anémie:", className="mt-3", style={"font-weight": "bold"}),
+                html.P("Présence d'anémie':"),
+                html.P("- Oui : 1"),
+                html.P("- Non : 0"),
+                
+                html.H6("Appétit:", className="mt-3", style={"font-weight": "bold"}),
+                html.P("Etat de l'appétit: "),
+                html.P("- Bon : 0"),
+                html.P("- Mauvais : 1"),
             ])
         ],
     ),
@@ -476,9 +508,9 @@ def enter_precise_values(btn1_clicks, btn2_clicks, reset_clicks):
     else:
         button_id = ctx.triggered[0]['prop_id'].split('.')[0]
         if button_id == 'enter-values-btn1':
-            return "ID-Patient-1", 68, 31, 89, 0, 0, 1, 0, 0, 0, 1
+            return "ID-Patient-1", 68, 31, 89, 0, 0, 0, 0, 0, 0, 0
         elif button_id == 'enter-values-btn2':
-            return "ID-Patient-2", 42, 23, 58, 0, 0, 0, 0, 1, 0, 1
+            return "ID-Patient-2", 42, 23, 58, 0, 0, 0, 0, 1, 0, 0
         elif button_id == 'reset-btn':
             return None, None, None, None, None, None, None, None, None, None, None
 
@@ -504,8 +536,8 @@ def rein_predict(n_clicks, input_IDrein, input_age, input_pcv, input_pressure, s
     if n_clicks == 0:
         raise PreventUpdate
     else:
-        X = df_rein[['blood_pressure', 'sugar', 'age', 'hypertension', 'diabete', 'pus_cell', 'appet', 'coronary_artery_disease',
-        'anemie', 'packed_cell_vol']]
+        X = df_rein[['age', 'packed_cell_vol', 'blood_pressure', 'sugar', 'coronary_artery_disease', 'hypertension', 'diabete', 'pus_cell',
+        'anemie', 'appet']]
         y = df_rein['classification']
         X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42, train_size = 0.75)
         X_train_scal= scal_rein.fit_transform(X_train)
@@ -513,8 +545,8 @@ def rein_predict(n_clicks, input_IDrein, input_age, input_pcv, input_pressure, s
         modelRein.fit(X_train_scal, y_train)
         rein_data = np.array([input_age, input_pcv, input_pressure, slider_sucre,
                  input_coronary, input_hpt, input_dbt, input_pus, input_anemie, input_appet]).reshape(1,10)
-        rein_data = pd.DataFrame(rein_data, columns= ['blood_pressure', 'sugar', 'age', 'hypertension', 'diabete', 
-                                                      'pus_cell', 'appet', 'coronary_artery_disease','anemie', 'packed_cell_vol'])
+        rein_data = pd.DataFrame(rein_data, columns= ['age', 'packed_cell_vol', 'blood_pressure', 'sugar', 'coronary_artery_disease', 'hypertension', 'diabete', 'pus_cell',
+        'anemie', 'appet'])
         rein_data_scal = scal_rein.transform(rein_data)
         rein_predict = modelRein.predict(rein_data_scal)
         current_date = datetime.datetime.now().strftime("%d-%m-%Y")
@@ -545,19 +577,19 @@ foie_layout = html.Div([
         dbc.Button("Lexique des variables", id="open-offcanvas-foie", n_clicks=0),
         dbc.Offcanvas(id="offcanvas-foie", scrollable=True, title="Lexique des variables", is_open=False,
                     children=[ html.Div([
-                html.H6("Alamine Aminotransferase:", className="mt-3", style={"font-weight": "bold"}),
+                html.H6("Alamine Aminotransferase (UI/L):", className="mt-3", style={"font-weight": "bold"}),
                 html.P('les transaminases ALAT, également appelées TGP ou SGPT'),
                 html.P('Le taux d’ALAT normal entre 8 et 35 (UI/L) pour les hommes et entre 6 et 25 UI/L pour les femmes.'),
 
-                html.H6("Alkaline Phosphotase:", className="mt-3", style={"font-weight": "bold"}),
+                html.H6("Alkaline Phosphotase (U/L):", className="mt-3", style={"font-weight": "bold"}),
                 html.P("Les phosphatases alcalines sont élevées chez les enfants en raison de la croissance osseuse due à l’âge et chez la femme enceinte"),
                 html.P("Sinon le taux normal d'une femme : 35 à 104 U/L et d'un homme : 40 à 129 U/L"),
 
-                html.H6("Albumin and Globulin Ratio:", className="mt-3", style={"font-weight": "bold"}),
+                html.H6("Ratio Albumin/Globulin:", className="mt-3", style={"font-weight": "bold"}),
                 html.P("Rapport de l'albumine à la globuline dans le sang."),               
-                html.P('Le rapport albumine/globuline se situe entre 1,2 et 1,8.'),
+                html.P('A la normale, le rapport albumine/globuline se situe entre 1,2 et 1,8.'),
 
-                html.H6("Bilirubine totale dans le sang:", className="mt-3", style={"font-weight": "bold"}),
+                html.H6("Bilirubine totale dans le sang (mg/L):", className="mt-3", style={"font-weight": "bold"}),
                 html.P("A l'âge adulte le taux normal est compris entre 3 et 10 mg/L"),
             ])
         ],
@@ -601,7 +633,7 @@ dbc.Row(html.P(style={'margin-top': '20px'})),
                     dbc.Input(id='Input_alka', type='number', placeholder= 'Entrer un nombre')                   
                 ]),
             dbc.InputGroup([
-                    dbc.InputGroupText('Ration Albumine/Globuline'),
+                    dbc.InputGroupText('Ratio Albumine/Globuline'),
                     dbc.Input(id='Input_albglo', type='number', placeholder= 'Entrer un nombre')                   
                 ]),
             dbc.InputGroup([
@@ -711,16 +743,15 @@ coeur_layout = html.Div([
         dbc.Button("Lexique des variables", id="open-offcanvas-coeur", n_clicks=0),
         dbc.Offcanvas(id="offcanvas-coeur", scrollable=True, title="Lexique des variables", is_open=False,
                     children=[ html.Div([
-                html.H6("Pression artérielle:", className="mt-3", style={"font-weight": "bold"}),
-                html.P("Pression diastolique (mm Hg). : la pression minimum enregistrée lors du relâchement du cœur."),
+                html.H6("Pression artérielle (mmHg):", className="mt-3", style={"font-weight": "bold"}),
+                html.P("Pression diastolique : la pression minimum enregistrée lors du relâchement du cœur."),
                 html.P("Hypertension artérielle si >= 80 mmHg (mm de mercure)."),
 
-                html.H6("Cholesterol:", className="mt-3", style={"font-weight": "bold"}),
-                html.P("Cholesterol (chol, mg/dl)"),
-                html.P("Le taux de cholestérol total = les valeurs du HDL + les valeurs du LDL."),
+                html.H6("Cholesterol (mg/dl):", className="mt-3", style={"font-weight": "bold"}),
+                html.P("Le taux de cholestérol total (chol) = les valeurs du HDL + les valeurs du LDL."),
 
-                html.H6("Glycémie", className="mt-3", style={"font-weight": "bold"}),
-                html.P("Glycémie (fbs,  > 120 mg/dl, 1 = oui, 0 = non)"),
+                html.H6("Glycémie (mg/dl):", className="mt-3", style={"font-weight": "bold"}),
+                html.P("Glycémie à jeun (fbs,  > 120 mg/dl, 1 = oui, 0 = non)"),
 
                 html.H6("Fréquence cardiaque max : ", className="mt-3", style={"font-weight": "bold"}),
                 html.P("Fréquence cardiaque maximale atteinte (thalach)"),
@@ -728,18 +759,18 @@ coeur_layout = html.Div([
                 html.H6("Type de thalassémie :", className="mt-3", style={"font-weight": "bold"}),
                 html.P("Type de thalassémie (thal, 0 = normal, 2 = défaut fixe, 3 = défaut réversible)"),
                 
-                html.H6("Depression segment ST", className="mt-3", style={"font-weight": "bold"}),
+                html.H6("Depression segment ST (mm):", className="mt-3", style={"font-weight": "bold"}),
                 html.P("Dépression du segment ST induite par l'exercice par rapport au repos (oldpeak)"),
                 html.P("ST se rapporte aux positions sur le tracé de l'ECG"),
                         
-                html.H6("Pente segment ST :", className="mt-3", style={"font-weight": "bold"}),
+                html.H6("Pente segment ST:", className="mt-3", style={"font-weight": "bold"}),
                 html.P("Pente du segment ST à l'effort maximal (slope)"),
                 html.P("1 = pente ascendante, 2 = plat, 3 = pente descendante"),
                 
                 html.H6("Nombre de vaisseaux majeurs colorés par fluoroscopie", className="mt-3", style={"font-weight": "bold"}),
                 html.P("Nombre de vaisseaux majeurs colorés par fluoroscopie (ca)"),
                         
-                html.H6("exang :", className="mt-3", style={"font-weight": "bold"}),
+                html.H6("Exang :", className="mt-3", style={"font-weight": "bold"}),
                 html.P("Angine de poitrine provoquée par l'exercice (exang), oui = 1, non = 0"),
                       
                 html.H6("Résultats électrocardiogrammes :", className="mt-3", style={"font-weight": "bold"}),
@@ -902,7 +933,7 @@ def enter_precise_values(btn1_clicks, btn2_clicks, reset_clicks):
     else:
         button_id = ctx.triggered[0]['prop_id'].split('.')[0]
         if button_id == 'enter-values-btn1':
-            return "ID-Patient-1", 1, 67, 144, 272, 0, 158, 2, 0, 1, 1, 0, 0, 2
+            return "ID-Patient-1", 0, 67, 144, 272, 0, 158, 2, 0, 1, 1, 0, 0, 2
         elif button_id == 'enter-values-btn2':
             return "ID-Patient-2", 1, 67, 160, 244, 0, 118, 1, 0, 1, 3, 1, 1, 1
         elif button_id == 'reset-btn':
@@ -941,8 +972,7 @@ def coeur_predict(n_clicks, input_IDcoeur, input_genre, input_agecoeur, input_pa
         modelCoeur.fit(X_train_scal, y_train)
         coeur_data = np.array([input_genre, input_agecoeur, input_pad, input_chol, input_glycemie, input_freqmax, input_thalass,
                  input_depression, input_pente, input_vaisseaux, input_exang, input_electro, input_thoracique]).reshape(1,13)
-        coeur_data = pd.DataFrame(coeur_data, columns= ['sex', 'age', 'trestbps', 'chol', 'fbs', 'thalach', 'thal',
-                                                         'oldpeak', 'slope', 'ca', 'exang', 'restecg','cp'])
+        coeur_data = pd.DataFrame(coeur_data, columns= ['sex','age', 'trestbps', 'chol', 'fbs', 'thalach', 'thal', 'oldpeak', 'slope', 'ca', 'exang', 'restecg', 'cp'])
         coeur_data_scal = scal_coeur.transform(coeur_data)
         coeur_predict = modelCoeur.predict(coeur_data_scal)
         current_date = datetime.datetime.now().strftime("%d-%m-%Y")
@@ -950,7 +980,7 @@ def coeur_predict(n_clicks, input_IDcoeur, input_genre, input_agecoeur, input_pa
         coeur_worksheet.append_row([current_date, input_IDcoeur, input_genre, input_agecoeur, input_pad, input_chol, input_glycemie, input_freqmax, input_thalass,
                  input_depression, input_pente, input_vaisseaux, input_exang, input_electro, input_thoracique, int(coeur_predict)])
         coeur_export = f"Données exportées : id {input_IDcoeur}"
-        if coeur_predict < 0.4:
+        if coeur_predict < 0.4 :
             coeur_diag = "Votre patient n'est pas malade"
             proba = modelCoeur.predict_proba(coeur_data_scal)
             coeur_proba = proba[0,0]
@@ -989,7 +1019,7 @@ sein_layout = html.Div([
                 html.P("Moyenne de la gravité des parties concaves du contour"),               
 
                 html.H6("Concave points mean:", className="mt-3", style={"font-weight": "bold"}),
-                html.P("Moyenne du nombre de parties concaves du contour de"),
+                html.P("Moyenne du nombre de parties concaves du contour"),
 
                 html.H6("Symmetry Mean:", className="mt-3", style={"font-weight": "bold"}),
                 html.P("Moyenne des symétries de la tumeur"),
@@ -1122,7 +1152,7 @@ def sein_predict(n_clicks, input_IDsein, input_texture_mean, input_area_mean,inp
     if n_clicks == 0:
         raise PreventUpdate
     else:
-        X_sein = df_sein[[ 'texture_mean', 'area_mean', 'smoothness_mean',
+        X_sein = df_sein[['texture_mean', 'area_mean', 'smoothness_mean',
                           'compactness_mean', 'concavity_mean', 'concave points_mean', 'symmetry_mean']]
         y_sein = df_sein['diagnosis']
         X_train_sein, X_test_sein, y_train_sein, y_test_sein = train_test_split(X_sein, y_sein, random_state=42,
@@ -1133,7 +1163,7 @@ def sein_predict(n_clicks, input_IDsein, input_texture_mean, input_area_mean,inp
         sein_data = np.array(
             [input_texture_mean, input_area_mean, input_smoothness_mean,
              input_compactness_mean, input_concavity_mean, input_concave_points_mean, input_symmetry_mean,
-             ]).reshape(1, X_sein.shape[1])
+             ]).reshape(1, 7)
         sein_data = pd.DataFrame(sein_data, columns=X_sein.columns)
         sein_data_scal = scal_sein.transform(sein_data)
         sein_predict = modelSein.predict(sein_data_scal)
@@ -1143,7 +1173,7 @@ def sein_predict(n_clicks, input_IDsein, input_texture_mean, input_area_mean,inp
                  input_smoothness_mean, input_compactness_mean, input_concavity_mean, input_concave_points_mean,
                  input_symmetry_mean, int(sein_predict)])
         sein_export = f"Données exportées : id {input_IDsein}"
-        if sein_predict == 0:
+        if sein_predict == 0 :
             sein_diag = "C'est probablement une tumeur bénigne"
             proba = modelSein.predict_proba(sein_data_scal)
             sein_proba = proba[0,0]
@@ -1195,3 +1225,6 @@ def display_page(pathname):
 
 if __name__ == '__main__':
     app.run_server(host='0.0.0.0', port=8080, debug=True)
+
+
+
